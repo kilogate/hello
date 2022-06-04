@@ -1,3 +1,4 @@
+// go run gopl/ch1/dup3go .gitignore
 package main
 
 import (
