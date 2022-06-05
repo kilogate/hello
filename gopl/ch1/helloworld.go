@@ -1,4 +1,3 @@
-// go run gopl/ch1/helloworld.go
 package main
 
 import "fmt"
