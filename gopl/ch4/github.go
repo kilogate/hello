@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 	"net/url"
 	"strings"
@@ -32,18 +31,18 @@ type User struct {
 	HTMLURL string `json:"html_url"`
 }
 
-func main() {
-	terms := []string{"repo:golang/go", "is:open", "json", "decoder"}
-	result, err := SearchIssues(terms)
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Printf("%d issues:\n", result.TotalCount)
-	for _, item := range result.Items {
-		fmt.Printf("#%-5d %9.9s %.55s\n",
-			item.Number, item.User.Login, item.Title)
-	}
-}
+//func main() {
+//	terms := []string{"repo:golang/go", "is:open", "json", "decoder"}
+//	result, err := SearchIssues(terms)
+//	if err != nil {
+//		log.Fatal(err)
+//	}
+//	fmt.Printf("%d issues:\n", result.TotalCount)
+//	for _, item := range result.Items {
+//		fmt.Printf("#%-5d %9.9s %.55s\n",
+//			item.Number, item.User.Login, item.Title)
+//	}
+//}
 
 // SearchIssues queries the GitHub issue tracker.
 func SearchIssues(terms []string) (*IssuesSearchResult, error) {
