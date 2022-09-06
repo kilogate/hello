@@ -20,11 +20,11 @@ func main() {
 			log.Print(err) // e.g., connection aborted
 			continue
 		}
-		go handleConn(conn) // handle one connection at a time
+		go handleConn1(conn) // handle one connection at a time
 	}
 }
 
-func handleConn(c net.Conn) {
+func handleConn1(c net.Conn) {
 	defer c.Close()
 	for {
 		_, err := io.WriteString(c, time.Now().Format("15:04:05\n"))

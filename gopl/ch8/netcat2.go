@@ -13,10 +13,11 @@ func main() {
 		log.Fatal(err)
 	}
 	defer conn.Close()
-	mustCopy1(os.Stdout, conn)
+	go mustCopy2(os.Stdout, conn)
+	mustCopy2(conn, os.Stdin)
 }
 
-func mustCopy1(dst io.Writer, src io.Reader) {
+func mustCopy2(dst io.Writer, src io.Reader) {
 	if _, err := io.Copy(dst, src); err != nil {
 		log.Fatal(err)
 	}
