@@ -6,7 +6,10 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"time"
 )
+
+var verbose = flag.Bool("v", false, "show verbose progress messages")
 
 func main() {
 	// Determine the initial directories.
@@ -25,13 +28,29 @@ func main() {
 		close(fileSizes)
 	}()
 
-	// Print the results.
-	var nFiles, nBytes int64
-	for size := range fileSizes {
-		nFiles++
-		nBytes += size
+	// Print the results periodically.
+	var tick <-chan time.Time
+	if *verbose {
+		tick = time.Tick(100 * time.Millisecond)
 	}
-	printDiskUsage(nFiles, nBytes)
+
+	var nFiles, nBytes int64
+
+loop:
+	for {
+		select {
+		case size, ok := <-fileSizes:
+			if !ok {
+				break loop // fileSizes was closed
+			}
+			nFiles++
+			nBytes += size
+		case <-tick:
+			printDiskUsage(nFiles, nBytes)
+		}
+	}
+	printDiskUsage(nFiles, nBytes) // final totals
+	fmt.Println()
 }
 
 // walkDir recursively walks the file tree rooted at dir
@@ -58,5 +77,5 @@ func dirEntries(dir string) []os.FileInfo {
 }
 
 func printDiskUsage(nFiles, nBytes int64) {
-	fmt.Printf("%d files  %.1f GB\n", nFiles, float64(nBytes)/1e9)
+	fmt.Printf("\r%d files  %.1f GB", nFiles, float64(nBytes)/1e9)
 }
