@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"os"
 	"time"
@@ -10,23 +9,24 @@ import (
 func main() {
 	fmt.Println("Commencing countdown.")
 
-	abort := make(chan string)
+	// 取消命令
+	abort := make(chan struct{})
 	go func() {
-		input := bufio.NewScanner(os.Stdin)
-		for input.Scan() {
-			abort <- input.Text()
-		}
+		os.Stdin.Read(make([]byte, 1)) // read a single byte
+		abort <- struct{}{}
 	}()
 
+	// 倒计时
 	tick := time.Tick(1 * time.Second)
 
+	// 监听
 	for countdown := 10; countdown > 0; countdown-- {
 		select {
-		case <-abort:
-			fmt.Println("aborted.")
-			return
 		case <-tick:
 			fmt.Println(countdown)
+		case <-abort:
+			fmt.Println("Aborted.")
+			return
 		}
 	}
 	fmt.Println("launch...")
