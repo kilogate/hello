@@ -10,7 +10,12 @@ import (
 	"time"
 )
 
+// sema is a counting semaphore for limiting concurrency in dirents.
+var sema = make(chan struct{}, 8)
+
 func main() {
+	now := time.Now()
+
 	// Determine the initial directories.
 	flag.Parse()
 	roots := flag.Args()
@@ -51,6 +56,7 @@ loop:
 	}
 	printDiskUsage2(nFiles, nBytes) // final totals
 	fmt.Println()
+	fmt.Printf("cost: %fs\n", time.Since(now).Seconds())
 }
 
 // walkDir recursively walks the file tree rooted at dir
@@ -70,6 +76,9 @@ func walkDir2(dir string, wg *sync.WaitGroup, fileSizes chan<- int64) {
 
 // dirEntries returns the entries of directory dir.
 func dirEntries2(dir string) []os.FileInfo {
+	sema <- struct{}{}        // acquire token
+	defer func() { <-sema }() // release token
+
 	entries, err := ioutil.ReadDir(dir)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "du1: %v\n", err)
