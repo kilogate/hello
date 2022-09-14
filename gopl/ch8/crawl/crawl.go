@@ -10,7 +10,7 @@ import (
 var idx uint64 = 0
 var tokens = make(chan struct{}, 20)
 
-// main go run gopl/ch8/crawl.go www.baidu.com www.ali.com www.tencent.com
+// main go run gopl/ch8/crawl/crawl.go www.baidu.com www.ali.com www.tencent.com
 func main() {
 	workList := make(chan []string)
 	var n = 0

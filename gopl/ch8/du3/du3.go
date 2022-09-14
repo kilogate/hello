@@ -13,6 +13,7 @@ import (
 // sema is a counting semaphore for limiting concurrency in dirents.
 var sema = make(chan struct{}, 8)
 
+// main go run gopl/ch8/du3/du3.go ~/
 func main() {
 	now := time.Now()
 
@@ -29,7 +30,7 @@ func main() {
 	go func() {
 		for _, root := range roots {
 			wg.Add(1)
-			go walkDir2(root, &wg, fileSizes)
+			go walkDir(root, &wg, fileSizes)
 		}
 	}()
 	go func() {
@@ -51,23 +52,23 @@ loop:
 			nFiles++
 			nBytes += size
 		case <-tick:
-			printDiskUsage2(nFiles, nBytes)
+			printDiskUsage(nFiles, nBytes)
 		}
 	}
-	printDiskUsage2(nFiles, nBytes) // final totals
+	printDiskUsage(nFiles, nBytes) // final totals
 	fmt.Println()
 	fmt.Printf("cost: %fs\n", time.Since(now).Seconds())
 }
 
 // walkDir recursively walks the file tree rooted at dir
 // and sends the size of each found file on fileSizes.
-func walkDir2(dir string, wg *sync.WaitGroup, fileSizes chan<- int64) {
+func walkDir(dir string, wg *sync.WaitGroup, fileSizes chan<- int64) {
 	defer wg.Done()
-	for _, entry := range dirEntries2(dir) {
+	for _, entry := range dirEntries(dir) {
 		if entry.IsDir() {
 			wg.Add(1)
 			subDir := filepath.Join(dir, entry.Name())
-			go walkDir2(subDir, wg, fileSizes)
+			go walkDir(subDir, wg, fileSizes)
 		} else {
 			fileSizes <- entry.Size()
 		}
@@ -75,7 +76,7 @@ func walkDir2(dir string, wg *sync.WaitGroup, fileSizes chan<- int64) {
 }
 
 // dirEntries returns the entries of directory dir.
-func dirEntries2(dir string) []os.FileInfo {
+func dirEntries(dir string) []os.FileInfo {
 	sema <- struct{}{}        // acquire token
 	defer func() { <-sema }() // release token
 
@@ -87,6 +88,6 @@ func dirEntries2(dir string) []os.FileInfo {
 	return entries
 }
 
-func printDiskUsage2(nFiles, nBytes int64) {
+func printDiskUsage(nFiles, nBytes int64) {
 	fmt.Printf("\r%d files  %.1f GB", nFiles, float64(nBytes)/1e9)
 }
