@@ -53,17 +53,17 @@ func handleConn(conn net.Conn) {
 	go clientWriter(conn, cliChan)
 
 	who := conn.RemoteAddr().String()
-	cliChan <- "You are " + who
-	messagesChan <- who + " has arrived"
+	cliChan <- "【通知】You are " + who
+	messagesChan <- "【通知】" + who + " has arrived"
 	enteringCliChan <- cliChan
 
 	input := bufio.NewScanner(conn)
 	for input.Scan() {
-		messagesChan <- who + ": " + input.Text()
+		messagesChan <- "【消息】[" + who + "] " + input.Text()
 	}
 
 	leavingCliChan <- cliChan
-	messagesChan <- who + " has left"
+	messagesChan <- "【通知】" + who + " has left"
 	conn.Close()
 }
 
