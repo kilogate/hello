@@ -5,13 +5,20 @@ import (
 	"sync"
 )
 
+var balanceMutex sync.Mutex
 var balance int
 
 func Deposit(amount int) {
+	balanceMutex.Lock()
+	defer balanceMutex.Unlock()
+
 	balance = balance + amount
 }
 
 func Balance() int {
+	balanceMutex.Lock()
+	defer balanceMutex.Unlock()
+
 	return balance
 }
 
