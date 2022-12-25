@@ -1,5 +1,8 @@
 package main
 
-func main() {
+import "fmt"
 
+func main() {
+	a := "hello"
+	fmt.Print(a)
 }
