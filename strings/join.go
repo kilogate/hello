@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
+// 字符串拼接，go run strings/join.go a b c
 func main() {
-	// 字符串拼接，go run strings/strings.go a b c
 	fmt.Println(strings.Join(os.Args[1:], " "))
 }
