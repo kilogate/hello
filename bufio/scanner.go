@@ -6,14 +6,11 @@ import (
 	"os"
 )
 
-// 标准输入，直接运行，按行输入，通过 Ctrl + d 结束输入
 func main() {
-	counts := make(map[string]int)
+	// 从标准输入（控制台）中输入，按行输入，通过 Ctrl + d 结束输入
 	scanner := bufio.NewScanner(os.Stdin)
 	for scanner.Scan() {
-		counts[scanner.Text()]++
-	}
-	for line, n := range counts {
-		fmt.Printf("%d\t%s\n", n, line)
+		text := scanner.Text()
+		fmt.Println(text)
 	}
 }
