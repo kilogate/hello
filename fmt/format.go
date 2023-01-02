@@ -5,8 +5,12 @@ import (
 	"math"
 )
 
-// 格式化动词和转义字符
 func main() {
+	testFormat()
+}
+
+// testFormat 格式化动词和转义字符
+func testFormat() {
 	// %x, %d, %o, %b ：十六进制整数，十进制整数，八进制整数，二进制整数
 	fmt.Printf("%x, %d, %o, %b\n", 13, 13, 13, 13)
 

@@ -6,6 +6,10 @@ import (
 )
 
 func main() {
+	testSplitAndJoin()
+}
+
+func testSplitAndJoin() {
 	// 字符串分割
 	split := strings.Split("a,b,c", ",")
 	fmt.Println(split)
