@@ -12,6 +12,7 @@ type Stu struct {
 
 func main() {
 	testPrintf()
+	testSprintf()
 }
 
 // testPrintf 格式化动词和转义字符
@@ -80,4 +81,10 @@ func testPrintf() {
 
 	// \n：换行符、\t：制表符
 	fmt.Printf("a\tb\n")
+}
+
+func testSprintf() {
+	// 格式化并返回字符串
+	str := fmt.Sprintf("%s", "abc")
+	fmt.Println(str)
 }
