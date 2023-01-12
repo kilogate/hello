@@ -8,8 +8,8 @@ import (
 func main() {
 	testNow()
 	testDuration()
-	testSleep()
-	testSince()
+	//testSleep()
+	//testSince()
 }
 
 func testNow() {
@@ -42,6 +42,18 @@ func testDuration() {
 
 	year := 365 * day
 	fmt.Println(year)
+
+	fmt.Println(second.Hours())
+	fmt.Println(second.Minutes())
+	fmt.Println(second.Seconds())
+	fmt.Println(second.Milliseconds())
+	fmt.Println(second.Microseconds())
+	fmt.Println(second.Nanoseconds())
+
+	round := (119 * time.Second).Round(time.Minute)
+	fmt.Println(round)
+	truncate := (119 * time.Second).Truncate(time.Minute)
+	fmt.Println(truncate)
 }
 
 func testSleep() {
