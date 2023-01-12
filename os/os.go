@@ -10,6 +10,7 @@ import (
 
 func main() {
 	testArgs()
+	testStdIO()
 	testOpen()
 	testReadFile()
 }
@@ -20,6 +21,20 @@ func testArgs() {
 	fmt.Println(args)
 }
 
+func testStdIO() {
+	// 标准输入
+	stdin := os.Stdin
+	fmt.Println(stdin)
+
+	// 标准输出
+	stdout := os.Stdout
+	fmt.Println(stdout)
+
+	// 标准错误
+	stderr := os.Stderr
+	fmt.Println(stderr)
+}
+
 func testOpen() {
 	// open file（流式读取）
 	file, err := os.Open(`.gitignore`)
@@ -27,15 +42,14 @@ func testOpen() {
 		fmt.Fprintf(os.Stderr, "Open err, err: %+v\n", err)
 		return
 	}
+	// close file
+	defer file.Close()
 
 	// scan file
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		fmt.Println(scanner.Text())
 	}
-
-	// close file
-	file.Close()
 }
 
 func testReadFile() {

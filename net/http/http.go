@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 )
@@ -18,27 +18,17 @@ func testGet() {
 		log.Fatalf("Get err, err: %+v\n", err)
 		return
 	}
+	defer resp.Body.Close()
 
 	// resp status code
 	statusCode := resp.StatusCode
-
-	// println resp status code
 	fmt.Println(statusCode)
 
 	// resp body
-	respBody := resp.Body
-
-	// read resp body
-	respBodyBytes, err := ioutil.ReadAll(respBody)
-
-	// close resp body
-	respBody.Close()
-
+	respBodyBytes, err := io.ReadAll(resp.Body)
 	if err != nil {
 		log.Fatalf("ReadlAll err, err: %+v\n", err)
 		return
 	}
-
-	// println resp body
 	fmt.Println(string(respBodyBytes))
 }
