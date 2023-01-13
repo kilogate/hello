@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math"
+	"os"
 )
 
 type Stu struct {
@@ -13,6 +14,7 @@ type Stu struct {
 func main() {
 	testPrintf()
 	testSprintf()
+	testFprintf()
 }
 
 // testPrintf 格式化动词和转义字符
@@ -87,4 +89,10 @@ func testSprintf() {
 	// 格式化并返回字符串
 	str := fmt.Sprintf("%s", "abc")
 	fmt.Println(str)
+}
+
+func testFprintf() {
+	n, err := fmt.Fprintf(os.Stdout, "abc\n")
+	fmt.Println(n)
+	fmt.Println(err)
 }
