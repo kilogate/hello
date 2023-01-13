@@ -20,7 +20,7 @@ func main() {
 		"http://www.tencent.com",
 	}
 
-	httpResultMap := BatchGet(urlList)
+	httpResultMap := ParallelBatchGet(urlList)
 
 	for url, httpResult := range httpResultMap {
 		fmt.Println(url)
@@ -33,7 +33,8 @@ func main() {
 	}
 }
 
-func BatchGet(urlList []string) map[string]*HttpResult {
+// ParallelBatchGet 并行批量获取
+func ParallelBatchGet(urlList []string) map[string]*HttpResult {
 	if len(urlList) == 0 {
 		return nil
 	}
