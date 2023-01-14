@@ -8,7 +8,8 @@ import (
 )
 
 func main() {
-	testGet()
+	//testGet()
+	testServe()
 }
 
 func testGet() {
@@ -31,4 +32,13 @@ func testGet() {
 		return
 	}
 	fmt.Println(string(respBodyBytes))
+}
+
+func testServe() {
+	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
+		fmt.Fprintf(writer, "URL.Path = %q\n", request.URL.Path)
+	})
+
+	err := http.ListenAndServe("localhost:8080", nil)
+	log.Fatal(err)
 }
