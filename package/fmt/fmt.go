@@ -12,9 +12,14 @@ type Stu struct {
 }
 
 func main() {
+	testPrintln()
 	testPrintf()
 	testSprintf()
 	testFprintf()
+}
+
+func testPrintln() {
+	fmt.Println("abc")
 }
 
 // testPrintf 格式化动词和转义字符
