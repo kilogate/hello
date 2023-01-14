@@ -9,7 +9,8 @@ import (
 
 func main() {
 	//testGet()
-	testServe()
+	//testServe()
+	testRequest()
 }
 
 func testGet() {
@@ -37,6 +38,20 @@ func testGet() {
 func testServe() {
 	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
 		fmt.Fprintf(writer, "URL.Path = %q\n", request.URL.Path)
+	})
+
+	err := http.ListenAndServe("localhost:8080", nil)
+	log.Fatal(err)
+}
+
+func testRequest() {
+	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
+		if err := request.ParseForm(); err != nil {
+			log.Print(err)
+		}
+		for k, v := range request.Form {
+			fmt.Fprintf(writer, "Form[%q] = %q\n", k, v)
+		}
 	})
 
 	err := http.ListenAndServe("localhost:8080", nil)
