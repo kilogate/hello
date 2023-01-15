@@ -3,7 +3,8 @@ package main
 import "fmt"
 
 func main() {
-	testMake()
+	//testMake()
+	testPass()
 }
 
 func testMake() {
@@ -45,4 +46,39 @@ func testMake() {
 		strChan <- "abc"
 	}()
 	fmt.Println(<-strChan)
+}
+
+func testPass() {
+	// 数组不是引用类型，采用值传递，会复制一份数组
+	strArray := [3]string{"A", "B", "C"}
+	testPassForArray(strArray)
+	fmt.Println(strArray)
+
+	// 切片是引用类型，采用引用传递
+	strSlice := []string{"A", "B", "C"}
+	testPassForSlice(strSlice)
+	fmt.Println(strSlice)
+
+	// map是引用类型，采用引用传递
+	strMap := map[string]string{"a": "A", "b": "B", "c": "C"}
+	testPassForMap(strMap)
+	fmt.Println(strMap)
+}
+
+func testPassForArray(strArray [3]string) {
+	strArray[0] = "0"
+	strArray[1] = "1"
+	strArray[2] = "2"
+}
+
+func testPassForSlice(strSlice []string) {
+	strSlice[0] = "0"
+	strSlice[1] = "1"
+	strSlice[2] = "2"
+}
+
+func testPassForMap(strMap map[string]string) {
+	strMap["a"] = "0"
+	strMap["b"] = "1"
+	strMap["c"] = "2"
 }
