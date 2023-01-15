@@ -3,7 +3,8 @@ package main
 import "fmt"
 
 func main() {
-	testFallThrough()
+	//testFallThrough()
+	testSwitchTrue()
 }
 
 func testFallThrough() {
@@ -19,6 +20,25 @@ func testFallThrough() {
 		case "b":
 			fmt.Println("b")
 		case "c":
+			fmt.Println("c")
+		default:
+			fmt.Println("default")
+		}
+	}
+}
+
+func testSwitchTrue() {
+	strSlice := []string{"a", "b", "c"}
+
+	for _, str := range strSlice {
+		fmt.Printf("Round %s\n", str)
+
+		switch { // 无 tag switch（tagless switch），这和 switch true 等价
+		case str == "a":
+			fmt.Println("a")
+		case str == "b":
+			fmt.Println("b")
+		case str == "c":
 			fmt.Println("c")
 		default:
 			fmt.Println("default")
