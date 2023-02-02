@@ -74,7 +74,7 @@ func testPrintf() {
 	stu := &Stu{"Lask", 30}
 	fmt.Printf("%v\n", stu)  // 仅打印值
 	fmt.Printf("%+v\n", stu) // 再加上字段名
-	fmt.Printf("%#v\n", stu) // 再加上报名和类型名
+	fmt.Printf("%#v\n", stu) // 再加上包名和类型名
 
 	// %p：指针
 	fmt.Printf("%p\n", stu)
