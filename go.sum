@@ -1,2 +1,6 @@
+github.com/apaxa-go/helper v0.0.0-20180607175117-61d31b1c31c3 h1:badF2fxl2BsWu2f01OYRU9cNnbrOSoOlayijH7r9ip4=
+github.com/apaxa-go/helper v0.0.0-20180607175117-61d31b1c31c3/go.mod h1:42ENZ1Wd+1+1pgQWSQ/naAWaaP/uKw1zmnrMzBBNyTQ=
 golang.org/x/sync v0.1.0 h1:wsuoTGHzEhffawBOhz5CYhcrV4IdKZbEyZjBMuTp12o=
 golang.org/x/sync v0.1.0/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
+golang.org/x/text v0.6.0 h1:3XmdazWV+ubf7QgHSTWeykHOci5oeekaGJBLkrkaw4k=
+golang.org/x/text v0.6.0/go.mod h1:mrYo+phRRbMaCq/xk9113O4dZlRixOauAjOtrjsXDZ8=
