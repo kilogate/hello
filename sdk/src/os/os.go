@@ -10,6 +10,7 @@ import (
 
 func main() {
 	testArgs()
+	testWD()
 	testStdIO()
 	testOpen()
 	testReadFile()
@@ -19,6 +20,11 @@ func testArgs() {
 	// 命令行参数，go run os/os.go a b c
 	args := os.Args
 	fmt.Println(args)
+}
+
+func testWD() {
+	wd, err := os.Getwd()
+	fmt.Println(wd, err)
 }
 
 func testStdIO() {
