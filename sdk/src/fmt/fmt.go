@@ -36,6 +36,8 @@ func testPrintf() {
 	fmt.Printf("%-5d\n", 13) // 长度5，左对齐
 	fmt.Printf("%05d\n", 13) // 长度5，左边补零
 
+	fmt.Printf("%b %[1]o %[1]d %[1]x\n", 13) // [1] 表示继续使用第一个参数
+
 	// %f, %g, %e：浮点数3.141593，浮点数3.141592653589793，浮点数3.141593e+00
 	fmt.Printf("%f, %g, %e\n", math.Pi, math.Pi, math.Pi)
 
@@ -47,7 +49,7 @@ func testPrintf() {
 	fmt.Printf("%t, %t\n", true, false)
 
 	// %c：字符（rune） (Unicode码点)
-	fmt.Printf("%c, %c, %c\n", 'a', 'b', 'c')
+	fmt.Printf("%c, %c, %c\n", 'a', 'b', 22269)
 
 	// %s：字符串
 	fmt.Printf("%s\n", "字符串")
