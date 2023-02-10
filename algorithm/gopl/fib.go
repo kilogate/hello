@@ -7,7 +7,7 @@ func main() {
 	fmt.Println(fib2(5))
 }
 
-// fib1 菲波那切数列，递归法
+// 菲波那切数列，递归法
 func fib1(n int) int {
 	switch n {
 	case 0:
@@ -19,7 +19,7 @@ func fib1(n int) int {
 	}
 }
 
-// fib2 菲波那切数列，循环法
+// 菲波那切数列，循环法
 func fib2(n int) int {
 	x, y := 0, 1
 	for i := 0; i < n; i++ {
