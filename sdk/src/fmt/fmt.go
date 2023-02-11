@@ -38,9 +38,10 @@ func testPrintf() {
 
 	fmt.Printf("%b %[1]o %[1]d %[1]x\n", 13) // [1] 表示继续使用第一个参数
 
-	// %f, %g, %e：浮点数3.141593，浮点数3.141592653589793，浮点数3.141593e+00
-	fmt.Printf("%f, %g, %e\n", math.Pi, math.Pi, math.Pi)
+	// %f, %g, %e
+	fmt.Printf("%f, %g, %e\n", math.Pi, math.Pi, math.Pi) // 3.141593, 3.141592653589793, 3.141593e+00
 
+	// 宽度.精度
 	fmt.Printf("%.2f\n", 111.222)    // 两位小数
 	fmt.Printf("%4.2f\n", 111.222)   // 两位小数，最小宽度4
 	fmt.Printf("%010.2f\n", 111.222) // 两位小数，最小宽度10，不足补零
