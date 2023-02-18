@@ -6,6 +6,12 @@ import (
 )
 
 func main() {
+	testString()
+	testEscape()
+	testRawString()
+}
+
+func testString() {
 	s := "飞机666"
 	fmt.Println(len(s))                    // 字节数：9
 	fmt.Println(utf8.RuneCountInString(s)) // 字符数：5
@@ -24,7 +30,9 @@ func main() {
 
 	// 字符串不可修改
 	//s[7] = 7 // 编译报错：Cannot assign to s[7]
+}
 
+func testEscape() {
 	/* 转义字符
 	\a      响铃
 	\b      退格
@@ -48,7 +56,9 @@ func main() {
 	sj3 := "\u4e16\u754c"             // 码点 -> 字符
 	sj4 := "\U00004e16\U0000754c"     // 码点 -> 字符
 	fmt.Println(sj1, sj2, sj3, sj4)
+}
 
+func testRawString() {
 	// 原生字符串面值
 	a := `abc\tdef` // 原生字符串面值不转义
 	b := "abc\tdef" // 非原生字符串面值会转移
