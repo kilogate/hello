@@ -7,6 +7,7 @@ import (
 )
 
 func main() {
+	// rune 就是 Unicode 的码点
 	r := '中'        // int32 类型，值为 20013
 	sr := string(r) // string 类型，值为 "中"
 	fmt.Println(r, sr)
