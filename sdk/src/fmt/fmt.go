@@ -16,6 +16,7 @@ func main() {
 	testPrintf()
 	testSprintf()
 	testFprintf()
+	testScanf()
 }
 
 func testPrintln() {
@@ -103,4 +104,21 @@ func testFprintf() {
 	n, err := fmt.Fprintf(os.Stdout, "abc\n")
 	fmt.Println(n)
 	fmt.Println(err)
+}
+
+func testScanf() {
+	// 声明变量
+	var stringValue string
+	var intValue int
+	var floatValue float32
+	var boolValue bool
+
+	// 使用连续的空格分隔输入，将值绑定到对应类型的变量
+	fmt.Scanf("%s", &stringValue)
+	fmt.Scanf("%d", &intValue)
+	fmt.Scanf("%g", &floatValue)
+	fmt.Scanf("%t", &boolValue)
+
+	// 输入"str 123 1.23 true"
+	fmt.Println(stringValue, intValue, floatValue, boolValue)
 }
