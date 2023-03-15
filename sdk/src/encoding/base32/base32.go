@@ -7,7 +7,7 @@ import (
 
 func main() {
 	testStdEncoding()
-	testURLEncoding()
+	testHexEncoding()
 }
 
 func testStdEncoding() {
@@ -23,7 +23,7 @@ func testStdEncoding() {
 	fmt.Println(string(decoded))
 }
 
-func testURLEncoding() {
+func testHexEncoding() {
 	msg := "Hello? 世界"
 	encoded := base32.HexEncoding.EncodeToString([]byte(msg))
 	fmt.Println(encoded)
