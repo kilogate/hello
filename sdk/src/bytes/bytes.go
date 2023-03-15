@@ -18,6 +18,7 @@ func testBytes() {
 	fmt.Println(bytes.HasSuffix([]byte{'a', 'b', 'c'}, []byte{'a', 'b'}))            // false
 	fmt.Println(bytes.Index([]byte{'a', 'b', 'c'}, []byte{'a', 'b'}))                // 0
 	fmt.Println(bytes.Join([][]byte{{'a'}, {'a'}, {'a'}}, []byte{','}))              // [97 44 97 44 97]
+	fmt.Println(bytes.Repeat([]byte{'a', 'b', 'c'}, 3))                              // [97 98 99 97 98 99 97 98 99]
 }
 
 func testBuffer() {
