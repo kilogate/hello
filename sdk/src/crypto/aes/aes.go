@@ -15,25 +15,28 @@ func main() {
 	keyStr := "this is key"
 
 	// CBC模式
-	encryptCBC := AesEncryptCBC(originData, keyStr)
-	decryptCBC := AesDecryptCBC(encryptCBC, keyStr)
+	encryptCBC, _ := AesEncryptCBC(originData, keyStr)
+	decryptCBC, _ := AesDecryptCBC(encryptCBC, keyStr)
 	fmt.Println(encryptCBC, decryptCBC)
 
 	// ECB模式
-	encryptECB := AesEncryptECB(originData, keyStr)
-	decryptECB := AesDecryptECB(encryptECB, keyStr)
+	encryptECB, _ := AesEncryptECB(originData, keyStr)
+	decryptECB, _ := AesDecryptECB(encryptECB, keyStr)
 	fmt.Println(encryptECB, decryptECB)
 
 	// CFB模式
-	encryptCFB := AesEncryptCFB(originData, keyStr)
-	decryptCFB := AesDecryptCFB(encryptCFB, keyStr)
+	encryptCFB, _ := AesEncryptCFB(originData, keyStr)
+	decryptCFB, _ := AesDecryptCFB(encryptCFB, keyStr)
 	fmt.Println(encryptCFB, decryptCFB)
 }
 
 // AesEncryptCBC CBC模式加密
-func AesEncryptCBC(originData string, keyStr string) string {
+func AesEncryptCBC(originData string, keyStr string) (string, error) {
 	key := generateKey(keyStr)
-	aesCipher, _ := aes.NewCipher(key)
+	aesCipher, err := aes.NewCipher(key)
+	if err != nil {
+		return "", err
+	}
 	blockSize := aesCipher.BlockSize()
 
 	originBytes := []byte(originData)
@@ -42,29 +45,38 @@ func AesEncryptCBC(originData string, keyStr string) string {
 
 	cbcEncrypter := cipher.NewCBCEncrypter(aesCipher, key[:blockSize])
 	cbcEncrypter.CryptBlocks(encryptBytes, originBytes)
-	return base64.StdEncoding.EncodeToString(encryptBytes)
+	return base64.StdEncoding.EncodeToString(encryptBytes), nil
 }
 
 // AesDecryptCBC CBC模式解密
-func AesDecryptCBC(encryptData string, keyStr string) string {
+func AesDecryptCBC(encryptData string, keyStr string) (string, error) {
 	key := generateKey(keyStr)
-	aesCipher, _ := aes.NewCipher(key)
+	aesCipher, err := aes.NewCipher(key)
+	if err != nil {
+		return "", err
+	}
 
 	blockSize := aesCipher.BlockSize()
 	cbcDecrypter := cipher.NewCBCDecrypter(aesCipher, key[:blockSize])
 
-	encryptBytes, _ := base64.StdEncoding.DecodeString(encryptData)
+	encryptBytes, err := base64.StdEncoding.DecodeString(encryptData)
+	if err != nil {
+		return "", err
+	}
 	decryptBytes := make([]byte, len(encryptBytes))
 
 	cbcDecrypter.CryptBlocks(decryptBytes, encryptBytes)
 	decryptBytes = pkcs5UnPadding(decryptBytes)
-	return string(decryptBytes)
+	return string(decryptBytes), nil
 }
 
 // AesEncryptECB ECB模式加密
-func AesEncryptECB(originData string, keyStr string) string {
+func AesEncryptECB(originData string, keyStr string) (string, error) {
 	key := generateKey(keyStr)
-	aesCipher, _ := aes.NewCipher(key)
+	aesCipher, err := aes.NewCipher(key)
+	if err != nil {
+		return "", err
+	}
 	blockSize := aesCipher.BlockSize()
 
 	originBytes := []byte(originData)
@@ -81,16 +93,22 @@ func AesEncryptECB(originData string, keyStr string) string {
 	for start, end := 0, blockSize; start <= len(originBytes); start, end = start+blockSize, end+blockSize {
 		aesCipher.Encrypt(encryptBytes[start:end], plainBytes[start:end])
 	}
-	return base64.StdEncoding.EncodeToString(encryptBytes)
+	return base64.StdEncoding.EncodeToString(encryptBytes), nil
 }
 
 // AesDecryptECB ECB模式解密
-func AesDecryptECB(encryptData string, keyStr string) string {
+func AesDecryptECB(encryptData string, keyStr string) (string, error) {
 	key := generateKey(keyStr)
-	aesCipher, _ := aes.NewCipher(key)
+	aesCipher, err := aes.NewCipher(key)
+	if err != nil {
+		return "", err
+	}
 	blockSize := aesCipher.BlockSize()
 
-	encryptBytes, _ := base64.StdEncoding.DecodeString(encryptData)
+	encryptBytes, err := base64.StdEncoding.DecodeString(encryptData)
+	if err != nil {
+		return "", err
+	}
 	decryptBytes := make([]byte, len(encryptBytes))
 
 	// 分组分块解密
@@ -102,40 +120,49 @@ func AesDecryptECB(encryptData string, keyStr string) string {
 	if len(decryptBytes) > 0 {
 		trim = len(decryptBytes) - int(decryptBytes[len(decryptBytes)-1])
 	}
-	return string(decryptBytes[:trim])
+	return string(decryptBytes[:trim]), nil
 }
 
 // AesEncryptCFB CFB模式加密
-func AesEncryptCFB(originData string, keyStr string) string {
+func AesEncryptCFB(originData string, keyStr string) (string, error) {
 	key := generateKey(keyStr)
-	aesCipher, _ := aes.NewCipher(key)
+	aesCipher, err := aes.NewCipher(key)
+	if err != nil {
+		return "", err
+	}
 	blockSize := aesCipher.BlockSize()
 
 	originBytes := []byte(originData)
 	encryptBytes := make([]byte, blockSize+len(originBytes))
 	iv := encryptBytes[:blockSize]
 	if _, err := io.ReadFull(rand.Reader, iv); err != nil {
-		panic(err)
+		return "", err
 	}
 
 	cfbEncrypter := cipher.NewCFBEncrypter(aesCipher, iv)
 	cfbEncrypter.XORKeyStream(encryptBytes[blockSize:], originBytes)
-	return base64.StdEncoding.EncodeToString(encryptBytes)
+	return base64.StdEncoding.EncodeToString(encryptBytes), nil
 }
 
 // AesDecryptCFB CFB模式解密
-func AesDecryptCFB(encryptData string, keyStr string) string {
+func AesDecryptCFB(encryptData string, keyStr string) (string, error) {
 	key := generateKey(keyStr)
-	aesCipher, _ := aes.NewCipher(key)
+	aesCipher, err := aes.NewCipher(key)
+	if err != nil {
+		return "", err
+	}
 	blockSize := aesCipher.BlockSize()
 
-	encryptBytes, _ := base64.StdEncoding.DecodeString(encryptData)
+	encryptBytes, err := base64.StdEncoding.DecodeString(encryptData)
+	if err != nil {
+		return "", err
+	}
 	iv := encryptBytes[:blockSize]
 	encryptBytes = encryptBytes[blockSize:]
 
 	cfbDecrypter := cipher.NewCFBDecrypter(aesCipher, iv)
 	cfbDecrypter.XORKeyStream(encryptBytes, encryptBytes)
-	return string(encryptBytes)
+	return string(encryptBytes), nil
 }
 
 // pkcs5Padding PKCS5填充
