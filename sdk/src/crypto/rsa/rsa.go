@@ -59,7 +59,6 @@ func RSAVerify(originData, sign string, publicKey *rsa.PublicKey) bool {
 
 	err = rsa.VerifyPSS(publicKey, crypto.SHA256, shaBytes[:], signBytes, nil)
 	if err != nil {
-		fmt.Println("could not verify signature: ", err)
 		return false
 	}
 	return true
