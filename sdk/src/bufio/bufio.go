@@ -9,13 +9,18 @@ import (
 )
 
 func main() {
-	//testScanner()
-	testReader()
+	testScanner()
+	//testReader()
 }
 
 func testScanner() {
 	// 从标准输入（控制台）中输入，按行输入，通过 Ctrl + d 结束输入
 	scanner := bufio.NewScanner(os.Stdin)
+
+	// 按单词输入
+	scanner.Split(bufio.ScanWords)
+
+	// 循环读取输入
 	for scanner.Scan() {
 		text := scanner.Text()
 		fmt.Println(text)
@@ -23,7 +28,6 @@ func testScanner() {
 }
 
 func testReader() {
-	// 从控制台输入，通过 Ctrl + d 退出输入
 	in := bufio.NewReader(os.Stdin)
 	for {
 		r, n, err := in.ReadRune() // returns rune, nbytes, error
