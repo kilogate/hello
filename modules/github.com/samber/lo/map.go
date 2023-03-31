@@ -55,7 +55,7 @@ func main() {
 	assign := lo.Assign(m, otherMap)
 	fmt.Println(assign)
 
-	// MapKeys & MapValues & MapEntries
+	// MapKeys & MapValues & MapEntries & MapToSlice
 	mapKeys := lo.MapKeys(m, func(value string, key string) string {
 		return key + value
 	})
