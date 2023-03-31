@@ -15,7 +15,7 @@ func main() {
 	})
 	fmt.Println(contains, containsBy)
 
-	// 包含所有元素：Every
+	// 包含所有元素：Every & EveryBy
 	subLetters := []string{"A", "B", "C", "D", "C"}
 	every := lo.Every(letters, subLetters)
 	everyBy := lo.EveryBy(letters, func(item string) bool {
