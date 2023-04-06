@@ -22,7 +22,7 @@ func main() {
 	nm = lo.FromPairs(pairs)
 	fmt.Println(keys, values, entries, pairs, nm)
 
-	// ValueOr
+	// ValueOr：map取值
 	valueOr := lo.ValueOr(m, "d", "D")
 	fmt.Println(valueOr)
 
@@ -42,11 +42,11 @@ func main() {
 	omitByValues := lo.OmitByValues(m, []string{"A", "B"})
 	fmt.Println(omitBy, omitByKeys, omitByValues)
 
-	// Invert
+	// Invert：map[K]V -> map[V]K
 	invert := lo.Invert(m)
 	fmt.Println(invert)
 
-	// Assign
+	// Assign：合并多个map
 	otherMap := map[string]string{
 		"a": "AA",
 		"b": "BB",

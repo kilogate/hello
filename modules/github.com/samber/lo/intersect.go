@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	// 包含某个元素：Contains & ContainsBy
+	// Contains & ContainsBy：是否包含某个元素
 	letters := []string{"A", "B", "C", "D", "C"}
 	contains := lo.Contains(letters, "B")
 	containsBy := lo.ContainsBy(letters, func(item string) bool {
@@ -15,7 +15,7 @@ func main() {
 	})
 	fmt.Println(contains, containsBy)
 
-	// 包含所有元素：Every & EveryBy
+	// Every & EveryBy：是否包含所有元素
 	subLetters := []string{"A", "B", "C", "D", "C"}
 	every := lo.Every(letters, subLetters)
 	everyBy := lo.EveryBy(letters, func(item string) bool {
@@ -23,34 +23,34 @@ func main() {
 	})
 	fmt.Println(every, everyBy)
 
-	// 包含任意元素：Some & SomeBy
+	// Some & SomeBy：是否包含任意元素
 	some := lo.Some(letters, subLetters)
 	someBy := lo.SomeBy(letters, func(item string) bool {
 		return len(item) == 1
 	})
 	fmt.Println(some, someBy)
 
-	// 不包含任意元素：None & NoneBy
+	// None & NoneBy：是否不包含任意元素
 	none := lo.None(letters, subLetters)
 	noneBy := lo.NoneBy(letters, func(item string) bool {
 		return len(item) == 1
 	})
 	fmt.Println(none, noneBy)
 
-	// 交集：Intersect
+	// Intersect：交集
 	otherLetters := []string{"A", "B", "C", "F"}
 	intersect := lo.Intersect(letters, otherLetters)
 	fmt.Println(intersect)
 
-	// 差集：Difference
+	// Difference：差集
 	left, right := lo.Difference(letters, otherLetters)
 	fmt.Println(left, right)
 
-	// 并集：Union
+	// Union：并集
 	union := lo.Union(letters, otherLetters)
 	fmt.Println(union)
 
-	// 排除：Without & WithoutEmpty
+	// Without & WithoutEmpty：排除
 	without := lo.Without(letters, "A", "C")
 	withoutEmpty := lo.WithoutEmpty(letters)
 	fmt.Println(without, withoutEmpty)

@@ -24,7 +24,7 @@ func main() {
 	fmt.Println(lo.Clamp(5, 1, 10))  // 5
 	fmt.Println(lo.Clamp(50, 1, 10)) // 10
 
-	// Sum & SumBy
+	// Sum & SumBy：求和
 	fmt.Println(lo.Sum([]int{1, 3, 5, 7}))                                           // 16
 	fmt.Println(lo.SumBy([]int{1, 3, 5, 7}, func(item int) int { return item + 1 })) // 20
 }
