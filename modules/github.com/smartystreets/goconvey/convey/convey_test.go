@@ -1,4 +1,4 @@
-package testing
+package convey
 
 import (
 	"testing"
@@ -7,10 +7,11 @@ import (
 )
 
 /*
-使用 Web 页面
-cd modules/github.com/smartystreets/goconvey/convey/ && goconvey
+	使用 Web 页面
+	cd /Users/bytedance/IdeaProjects/hello/modules/github.com/smartystreets/goconvey/convey/ && goconvey
 */
 
+// cd /Users/bytedance/IdeaProjects/hello/modules/github.com/smartystreets/goconvey/convey/ && go test -v -run=TestNewStudent
 func TestNewStudent(t *testing.T) {
 	convey.Convey("正常的测试用例", t, func() {
 		stu, err := NewStudent(123, "Tom")
@@ -39,6 +40,7 @@ func TestNewStudent(t *testing.T) {
 	})
 }
 
+// cd /Users/bytedance/IdeaProjects/hello/modules/github.com/smartystreets/goconvey/convey/ && go test -v -run=TestStudent_GetAverage
 func TestStudent_GetAverage(t *testing.T) {
 	convey.Convey("正常的测试用例", t, func() {
 		stu := &Student{
