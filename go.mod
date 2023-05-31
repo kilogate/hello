@@ -10,6 +10,7 @@ require (
 )
 
 require (
+	github.com/agiledragon/gomonkey v2.0.2+incompatible // indirect
 	github.com/gopherjs/gopherjs v1.17.2 // indirect
 	github.com/jtolds/gls v4.20.0+incompatible // indirect
 	github.com/smartystreets/assertions v1.13.1 // indirect

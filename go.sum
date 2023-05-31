@@ -1,3 +1,5 @@
+github.com/agiledragon/gomonkey v2.0.2+incompatible h1:eXKi9/piiC3cjJD1658mEE2o3NjkJ5vDLgYjCQu0Xlw=
+github.com/agiledragon/gomonkey v2.0.2+incompatible/go.mod h1:2NGfXu1a80LLr2cmWXGBDaHEjb1idR6+FVlX5T3D9hw=
 github.com/apaxa-go/helper v0.0.0-20180607175117-61d31b1c31c3 h1:badF2fxl2BsWu2f01OYRU9cNnbrOSoOlayijH7r9ip4=
 github.com/apaxa-go/helper v0.0.0-20180607175117-61d31b1c31c3/go.mod h1:42ENZ1Wd+1+1pgQWSQ/naAWaaP/uKw1zmnrMzBBNyTQ=
 github.com/gopherjs/gopherjs v1.17.2 h1:fQnZVsXk8uxXIStYb0N4bGk7jeyTalG/wsZjQ25dO0g=
