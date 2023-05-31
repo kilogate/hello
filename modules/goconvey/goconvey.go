@@ -1,4 +1,4 @@
-package convey
+package goconvey
 
 import "fmt"
 
