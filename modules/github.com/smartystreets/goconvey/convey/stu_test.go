@@ -6,6 +6,11 @@ import (
 	"github.com/smartystreets/goconvey/convey"
 )
 
+/*
+使用 Web 页面
+cd modules/github.com/smartystreets/goconvey/convey/ && goconvey
+*/
+
 func TestNewStudent(t *testing.T) {
 	convey.Convey("正常的测试用例", t, func() {
 		stu, err := NewStudent(123, "Tom")
