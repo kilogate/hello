@@ -1,5 +1,16 @@
 package goconvey
 
+/*
+	导入
+	go get github.com/smartystreets/goconvey
+
+	安装
+	go install github.com/smartystreets/goconvey@latest
+
+	Web页面
+	cd /Users/bytedance/IdeaProjects/hello/modules/github.com/smartystreets/goconvey/convey/ && goconvey
+*/
+
 import "fmt"
 
 type Student struct {
