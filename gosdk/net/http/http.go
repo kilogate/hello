@@ -7,12 +7,6 @@ import (
 	"net/http"
 )
 
-func main() {
-	//testGet()
-	//testServe()
-	testRequest()
-}
-
 func testGet() {
 	// http get
 	resp, err := http.Get("https://www.baidu.com")
