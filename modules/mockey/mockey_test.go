@@ -2,6 +2,7 @@ package mockey
 
 import (
 	"fmt"
+	"hello/modules/mockey/other"
 	"testing"
 
 	"github.com/bytedance/mockey"
@@ -33,19 +34,6 @@ func TestMockValue(t *testing.T) {
 		res := Bar
 		convey.So(res, convey.ShouldEqual, 1)
 	})
-}
-
-func TestPatchConvey(t *testing.T) {
-	mockey.PatchConvey("TestPatchConvey", t, func() {
-		mockey.Mock(Foo).Return("c").Build()
-
-		res := Foo("a")
-		convey.So(res, convey.ShouldEqual, "c")
-	})
-
-	// `PatchConvey`外自动释放mock
-	res := Foo("a")
-	fmt.Println(res) // a
 }
 
 func TestWhen(t *testing.T) {
@@ -195,4 +183,35 @@ func TestPatch(t *testing.T) {
 		res = Foo("a")
 		convey.So(res, convey.ShouldEqual, "XXX")
 	})
+}
+
+func TestGetPrivateMethod(t *testing.T) {
+	convey.Convey("TestGetPrivateMethod", t, func() {
+		o := other.NewOther()
+		method := mockey.GetMethod(o, "Foo")
+		mockey.Mock(method).Return("X").Build()
+
+		res := o.Foo("a")
+		convey.So(res, convey.ShouldEqual, "X")
+	})
+}
+
+func TestGetGoroutineId(t *testing.T) {
+	convey.Convey("TestGetGoroutineId", t, func() {
+		id := mockey.GetGoroutineId()
+		convey.So(id, convey.ShouldNotBeEmpty)
+	})
+}
+
+func TestPatchConvey(t *testing.T) {
+	mockey.PatchConvey("TestPatchConvey", t, func() {
+		mockey.Mock(Foo).Return("c").Build()
+
+		res := Foo("a")
+		convey.So(res, convey.ShouldEqual, "c")
+	})
+
+	// `PatchConvey`外自动释放mock
+	res := Foo("a")
+	fmt.Println(res) // a
 }
