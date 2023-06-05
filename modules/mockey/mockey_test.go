@@ -47,3 +47,152 @@ func TestPatchConvey(t *testing.T) {
 	res := Foo("a")
 	fmt.Println(res) // a
 }
+
+func TestWhen(t *testing.T) {
+	convey.Convey("TestWhen", t, func() {
+		convey.Convey("TestWhen for func", func() {
+			mockey.Mock(Foo).
+				When(func(in string) bool {
+					return in == "x"
+				}).
+				Return("XXX").
+				Build()
+
+			res := Foo("a")
+			convey.So(res, convey.ShouldEqual, "a")
+
+			res = Foo("x")
+			convey.So(res, convey.ShouldEqual, "XXX")
+		})
+
+		convey.Convey("TestWhen for method", func() {
+			mockey.Mock((*A).Foo).
+				When(func(self *A, in string) bool {
+					return self != nil && in == "x"
+				}).
+				Return("XXX").
+				Build()
+
+			res := new(A).Foo("a")
+			convey.So(res, convey.ShouldEqual, "a")
+
+			res = new(A).Foo("x")
+			convey.So(res, convey.ShouldEqual, "XXX")
+		})
+	})
+}
+
+func TestReturnSequence(t *testing.T) {
+	convey.Convey("TestReturnSequence", t, func() {
+		mockey.Mock(Foo).Return(mockey.Sequence("A").Then("B").Times(2).Then("C").Times(3)).Build()
+
+		res := Foo("a")
+		convey.So(res, convey.ShouldEqual, "A")
+
+		res = Foo("a")
+		convey.So(res, convey.ShouldEqual, "B")
+
+		res = Foo("a")
+		convey.So(res, convey.ShouldEqual, "B")
+
+		res = Foo("a")
+		convey.So(res, convey.ShouldEqual, "C")
+
+		res = Foo("a")
+		convey.So(res, convey.ShouldEqual, "C")
+
+		res = Foo("a")
+		convey.So(res, convey.ShouldEqual, "C")
+	})
+}
+
+func TestTo(t *testing.T) {
+	convey.Convey("TestTo for func", t, func() {
+		hook := func(in string) string {
+			if len(in) > 3 {
+				return in
+			}
+			return "Hello" + in
+		}
+		mockey.Mock(Foo).To(hook).Build()
+
+		res := Foo("a")
+		convey.So(res, convey.ShouldEqual, "Helloa")
+
+		res = Foo("Hello")
+		convey.So(res, convey.ShouldEqual, "Hello")
+	})
+
+	convey.Convey("TestTo for method", t, func() {
+		hook := func(self *A, in string) string {
+			if self == nil {
+				return "null"
+			}
+			if len(in) > 3 {
+				return in
+			}
+			return "Hello" + in
+		}
+		mockey.Mock((*A).Foo).To(hook).Build()
+
+		a := new(A)
+		res := a.Foo("a")
+		convey.So(res, convey.ShouldEqual, "Helloa")
+
+		res = a.Foo("Hello")
+		convey.So(res, convey.ShouldEqual, "Hello")
+	})
+}
+
+func TestOrigin(t *testing.T) {
+	convey.Convey("TestOrigin", t, func() {
+		origin := Foo
+		mockey.Mock(Foo).Return("XXX").Origin(&origin).Build()
+
+		res := Foo("a")
+		convey.So(res, convey.ShouldEqual, "XXX")
+
+		res = origin("a")
+		convey.So(res, convey.ShouldEqual, "a")
+	})
+}
+
+func TestMocker(t *testing.T) {
+	convey.Convey("TestMocker", t, func() {
+		mocker := mockey.Mock(Foo).
+			When(func(in string) bool {
+				return in == "x"
+			}).
+			Return("XXX").
+			Build()
+
+		res := Foo("a")
+		convey.So(res, convey.ShouldEqual, "a")
+
+		res = Foo("x")
+		convey.So(res, convey.ShouldEqual, "XXX")
+
+		times := mocker.Times()
+		convey.So(times, convey.ShouldEqual, 2)
+
+		mockTimes := mocker.MockTimes()
+		convey.So(mockTimes, convey.ShouldEqual, 1)
+	})
+}
+
+func TestPatch(t *testing.T) {
+	convey.Convey("TestPatch", t, func() {
+		mocker := mockey.Mock(Foo).Return("XXX").Build()
+
+		res := Foo("a")
+		convey.So(res, convey.ShouldEqual, "XXX")
+
+		mocker.UnPatch()
+		res = Foo("a")
+		convey.So(res, convey.ShouldEqual, "a")
+
+		mocker.Patch()
+		res = Foo("a")
+		convey.So(res, convey.ShouldEqual, "XXX")
+	})
+}
