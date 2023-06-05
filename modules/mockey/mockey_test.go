@@ -1,6 +1,7 @@
 package mockey
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/bytedance/mockey"
@@ -8,8 +9,8 @@ import (
 )
 
 func TestMockFunc(t *testing.T) {
-	mockey.PatchConvey("TestMockFunc", t, func() { // `PatchConvey`外自动释放mock
-		mockey.Mock(Foo).Return("c").Build() // mock函数
+	convey.Convey("TestMockFunc", t, func() {
+		mockey.Mock(Foo).Return("c").Build()
 
 		res := Foo("a")
 		convey.So(res, convey.ShouldEqual, "c")
@@ -17,8 +18,8 @@ func TestMockFunc(t *testing.T) {
 }
 
 func TestMockMethod(t *testing.T) {
-	mockey.PatchConvey("TestMockMethod", t, func() { // `PatchConvey`外自动释放mock
-		mockey.Mock(A.Foo).Return("c").Build() // mock方法
+	convey.Convey("TestMockMethod", t, func() {
+		mockey.Mock(A.Foo).Return("c").Build()
 
 		res := new(A).Foo("b")
 		convey.So(res, convey.ShouldEqual, "c")
@@ -26,10 +27,23 @@ func TestMockMethod(t *testing.T) {
 }
 
 func TestMockValue(t *testing.T) {
-	mockey.PatchConvey("TestMockXXX", t, func() { // `PatchConvey`外自动释放mock
-		mockey.MockValue(&Bar).To(1) // mock变量
+	convey.Convey("TestMockXXX", t, func() {
+		mockey.MockValue(&Bar).To(1)
 
 		res := Bar
 		convey.So(res, convey.ShouldEqual, 1)
 	})
+}
+
+func TestPatchConvey(t *testing.T) {
+	mockey.PatchConvey("TestPatchConvey", t, func() {
+		mockey.Mock(Foo).Return("c").Build()
+
+		res := Foo("a")
+		convey.So(res, convey.ShouldEqual, "c")
+	})
+
+	// `PatchConvey`外自动释放mock
+	res := Foo("a")
+	fmt.Println(res) // a
 }
