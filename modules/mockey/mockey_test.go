@@ -19,7 +19,7 @@ func TestMockFunc(t *testing.T) {
 
 func TestMockMethod(t *testing.T) {
 	convey.Convey("TestMockMethod", t, func() {
-		mockey.Mock(A.Foo).Return("c").Build()
+		mockey.Mock((*A).Foo).Return("c").Build()
 
 		res := new(A).Foo("b")
 		convey.So(res, convey.ShouldEqual, "c")

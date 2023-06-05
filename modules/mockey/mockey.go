@@ -6,7 +6,7 @@ func Foo(in string) string {
 
 type A struct{}
 
-func (a A) Foo(in string) string {
+func (a *A) Foo(in string) string {
 	return in
 }
 
