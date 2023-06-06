@@ -19,3 +19,7 @@
 
 # MacOS
 .DS_Store
+
+# hertz
+log/
+dumped_hertz_remote_config.json
