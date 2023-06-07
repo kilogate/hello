@@ -6,12 +6,11 @@ import (
 	"net/url"
 	"testing"
 
+	"github.com/cloudwego/hertz/pkg/common/config"
+	"github.com/cloudwego/hertz/pkg/common/ut"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
+	"github.com/cloudwego/hertz/pkg/route"
 	"github.com/smartystreets/goconvey/convey"
-
-	"code.byted.org/middleware/hertz/pkg/common/config"
-	"code.byted.org/middleware/hertz/pkg/route"
-	"code.byted.org/middleware/hertz_ext/v2/hertztest"
 )
 
 func Test_handleGet(t *testing.T) {
@@ -19,7 +18,7 @@ func Test_handleGet(t *testing.T) {
 		r := route.NewEngine(config.NewOptions([]config.Option{}))
 		r.GET("/test/get", handleGet)
 
-		w := hertztest.PerformRequest(r, consts.MethodGet, "/test/get?id=123&name=Tom", nil)
+		w := ut.PerformRequest(r, consts.MethodGet, "/test/get?id=123&name=Tom", nil)
 		resp := w.Result()
 
 		var s = struct {
@@ -53,8 +52,8 @@ func Test_handlePut(t *testing.T) {
 			"name": {"Tom"},
 		}
 		body := values.Encode()
-		w := hertztest.PerformRequest(r, consts.MethodPut, "/test/put", &hertztest.Body{Body: bytes.NewBufferString(body), Len: len(body)},
-			hertztest.Header{Key: "Content-Type", Value: "application/x-www-form-urlencoded"})
+		w := ut.PerformRequest(r, consts.MethodPut, "/test/put", &ut.Body{Body: bytes.NewBufferString(body), Len: len(body)},
+			ut.Header{Key: "Content-Type", Value: "application/x-www-form-urlencoded"})
 		resp := w.Result()
 
 		var s = struct {
@@ -91,7 +90,7 @@ func Test_handlePost(t *testing.T) {
 			Name: "Tom",
 		}
 		bodyBytes, _ := json.Marshal(s)
-		w := hertztest.PerformRequest(r, consts.MethodPost, "/test/post", &hertztest.Body{Body: bytes.NewBuffer(bodyBytes), Len: len(bodyBytes)})
+		w := ut.PerformRequest(r, consts.MethodPost, "/test/post", &ut.Body{Body: bytes.NewBuffer(bodyBytes), Len: len(bodyBytes)})
 		resp := w.Result()
 
 		err := json.Unmarshal(resp.Body(), &s)
@@ -116,7 +115,7 @@ func Test_handleDelete(t *testing.T) {
 		r := route.NewEngine(config.NewOptions([]config.Option{}))
 		r.DELETE("/test/delete/:id", handleDelete)
 
-		w := hertztest.PerformRequest(r, consts.MethodDelete, "/test/delete/123", nil, hertztest.Header{Key: "user", Value: "Tom"})
+		w := ut.PerformRequest(r, consts.MethodDelete, "/test/delete/123", nil, ut.Header{Key: "user", Value: "Tom"})
 		resp := w.Result()
 
 		var s = struct {

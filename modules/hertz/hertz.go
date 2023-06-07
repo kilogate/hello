@@ -6,14 +6,11 @@ import (
 	"time"
 
 	"github.com/cloudwego/hertz/pkg/app"
-
-	"code.byted.org/middleware/hertz/byted"
+	"github.com/cloudwego/hertz/pkg/app/server"
 )
 
-// go run modules/hertz/hertz.go -psm xxx -conf-dir modules/hertz -log-dir ./log
 func main() {
-	byted.Init()
-	r := byted.Default()
+	r := server.Default()
 
 	r.GET("/test/get", handleGet)
 	r.PUT("/test/put", handlePut)
