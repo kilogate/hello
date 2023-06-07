@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"encoding/json"
+	"time"
 
 	"github.com/cloudwego/hertz/pkg/app"
 
@@ -25,6 +26,7 @@ func main() {
 func handleGet(ctx context.Context, c *app.RequestContext) {
 	id := c.Query("id")
 	name := c.Query("name")
+
 	c.JSON(200, struct {
 		ID   string
 		Name string
@@ -37,6 +39,7 @@ func handleGet(ctx context.Context, c *app.RequestContext) {
 func handlePut(ctx context.Context, c *app.RequestContext) {
 	id := c.PostForm("id")
 	name := c.PostForm("name")
+
 	c.JSON(200, struct {
 		ID   string
 		Name string
@@ -52,16 +55,22 @@ func handlePost(ctx context.Context, c *app.RequestContext) {
 		Name string
 	}{}
 	_ = json.Unmarshal(c.Request.Body(), &s)
+
 	c.JSON(200, s)
 }
 
 func handleDelete(ctx context.Context, c *app.RequestContext) {
 	id := c.Param("id")
-	c.JSON(200, struct {
-		ID   string
-		Name string
-	}{
-		ID:   id,
-		Name: "",
+	user := c.Request.Header.Get("user")
+
+	c.Response.Header.Set("Update-At", time.Now().String())
+
+	c.JSON(200, map[string]interface{}{
+		"code":    0,
+		"message": "success",
+		"data": map[string]interface{}{
+			"id":   id,
+			"user": user,
+		},
 	})
 }

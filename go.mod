@@ -4,12 +4,14 @@ go 1.18
 
 require (
 	code.byted.org/middleware/hertz v1.10.5
+	code.byted.org/middleware/hertz_ext/v2 v2.1.6
 	github.com/agiledragon/gomonkey v2.0.2+incompatible
 	github.com/apaxa-go/helper v0.0.0-20180607175117-61d31b1c31c3
 	github.com/bytedance/mockey v1.2.4
 	github.com/cloudwego/hertz v0.6.4
 	github.com/samber/lo v1.38.1
 	github.com/smartystreets/goconvey v1.8.0
+	github.com/stretchr/testify v1.8.1
 	golang.org/x/sync v0.1.0
 )
 
@@ -60,6 +62,7 @@ require (
 	github.com/caarlos0/env/v6 v6.2.2 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
 	github.com/cloudwego/netpoll v0.3.2 // indirect
+	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
 	github.com/go-kit/log v0.2.1 // indirect
 	github.com/go-logfmt/logfmt v0.5.1 // indirect
@@ -86,6 +89,7 @@ require (
 	github.com/opentracing/opentracing-go v1.2.0 // indirect
 	github.com/pelletier/go-toml v1.8.1 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
+	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/power-devops/perfstat v0.0.0-20210106213030-5aafc221ea8c // indirect
 	github.com/shirou/gopsutil/v3 v3.22.1 // indirect
 	github.com/sirupsen/logrus v1.8.1 // indirect
@@ -116,4 +120,5 @@ require (
 	gopkg.in/ini.v1 v1.62.0 // indirect
 	gopkg.in/square/go-jose.v2 v2.4.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
