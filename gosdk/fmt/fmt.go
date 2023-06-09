@@ -56,6 +56,7 @@ func testPrintf() {
 	// %s：字符串
 	fmt.Printf("%s\n", "字符串")
 	fmt.Printf("%5s\n", "字符串")         // 展示的最小宽度为5，右对齐
+	fmt.Printf("%*s\n", 5, "字符串")      // 展示的最小宽度为5，右对齐
 	fmt.Printf("%-5s\n", "字符串")        // 左对齐
 	fmt.Printf("%05s\n", "字符串")        // 补零
 	fmt.Printf("%.5s\n", "123456789")  // 截断的最大宽度5
