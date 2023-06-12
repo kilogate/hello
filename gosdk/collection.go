@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func main() {
-	//testMake()
+	testMake()
 	testPass()
 }
 
@@ -13,7 +13,7 @@ func testMake() {
 	fmt.Println(strArray[0]) // 可读
 	strArray[0] = "ABC"      // 可写
 
-	// 2 切片需要make或append后再使用
+	// 2 切片需要make后再使用
 	var strSlice []string // nil
 	//fmt.Println(strSlice[0])  // 读报错，runtime error: index out of range [0] with length 0
 	//strSlice[0] = "ABC" // 写报错，runtime error: index out of range [0] with length 0
