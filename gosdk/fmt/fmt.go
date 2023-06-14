@@ -11,11 +11,26 @@ type Stu struct {
 	Age  int
 }
 
+type User struct {
+	NO   int
+	Name string
+}
+
+func (u *User) Format(s fmt.State, verb rune) {
+	switch verb {
+	case 'v':
+		fmt.Fprintf(s, "vvv[%d]%s", u.NO, u.Name)
+	case 's':
+		fmt.Fprintf(s, "sss[%d]%s", u.NO, u.Name)
+	}
+}
+
 func main() {
 	testPrintln()
 	testPrintf()
 	testSprintf()
 	testFprintf()
+	testCustomFormat()
 	testScanf()
 }
 
@@ -105,6 +120,16 @@ func testFprintf() {
 	n, err := fmt.Fprintf(os.Stdout, "abc\n")
 	fmt.Println(n)
 	fmt.Println(err)
+}
+
+func testCustomFormat() {
+	u := &User{
+		NO:   123,
+		Name: "Tom",
+	}
+	s := fmt.Sprintf("%s", u) // sss[123]Tom
+	v := fmt.Sprintf("%v", u) // vvv[123]Tom
+	fmt.Println(s, v)
 }
 
 func testScanf() {
